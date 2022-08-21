@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "assignees": [ "volker.raschek" ],
+  "automergeStrategy": "merge-commit",
+  "automergeType": "pr",
+  "labels": [ "renovate" ],
+  "packageRules": [
+    {
+      "addLabels": [ "renovate/droneci", "renovate/automerge" ],
+      "automerge": true,
+      "matchManagers": "droneci",
+      "matchUpdateTypes": [ "minor", "patch"]
+    }
+  ],
+  "rebaseLabel": "renovate/rebase",
+  "rebaseWhen": "behind-base-branch",
+  "regexManagers": [
+    {
+      "description": "Update container images of mkisofs.sh",
+      "fileMatch": [
+        "^mkisofs.sh$"
+      ],
+      "matchStrings": [
+        "^CREATEREPO_IMAGE_FULLY_QUALIFIED=(?<depName>.*):(?<currentValue>.*)$",
+        "^MKISOFS_IMAGE_FULLY_QUALIFIED=(?<depName>.*):(?<currentValue>.*)$"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
