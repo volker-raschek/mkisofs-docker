@@ -10,22 +10,31 @@ The primary goal of this project is to package the binary `mkisofs` and
 dependencies as container image to provide the functionally for CI/CD workflows
 or for systems which does contains the binary.
 
-## mkisofs.sh
-
-The shell script `mkisofs.sh` is a wrapper for the binary `mkisofs`, which
-is not available depending on the distribution. It starts the container image
-`docker.io/volkerraschek/mkisofs` in the background to call the binary. For
-this reason, a container runtime like `docker` or `podman` is necessary.
-
-### Installation
-
-The script can be installed via the following command:
-
-```bash
-curl https://git.cryptic.systems/volker.raschek/mkisofs-docker/raw/branch/master/mkisofs.sh --output - | sudo tee /usr/local/bin/mkisofs.sh && sudo chmod +x /usr/local/bin/mkisofs.sh
-```
-
-### Usage
+## Usage
 
 The script forwards all arguments directly to the binary running inside the
-container. For this reason, all arguments from the original binary can be used.
+container. For this reason, all arguments from the original binary can be used,
+for example to create an adapted bootable fedora iso image.
+
+```bash
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+podman run \
+  --rm \
+  --volume ${SCRIPT_DIR}:/workspace \
+  --workdir /workspace \
+  docker.io/volkerraschek/mkisofs \
+    -output /workspace/fedora-35.iso \
+    -eltorito-boot isolinux/isolinux.bin \
+    -eltorito-catalog isolinux/boot.cat \
+    -no-emul-boot \
+    -joliet \
+    -joliet-long \
+    -boot-load-size 4 \
+    -boot-info-table \
+    -full-iso9660-filenames \
+    -rational-rock \
+    -verbose \
+    -volid "exam" \ # specified in ks.cfg
+    /workspace/custom-iso
+```

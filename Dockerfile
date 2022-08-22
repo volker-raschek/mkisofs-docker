@@ -11,4 +11,4 @@ RUN if [ -z ${MKISOFS_VERSION+x} ]; then \
       yum install --assumeyes xorriso-${MKISOFS_VERSION}; \
     fi
 
-ENTRYPOINT [ "/usr/bin/xorriso" ]
+ENTRYPOINT [ "/usr/bin/mkisofs" ]
