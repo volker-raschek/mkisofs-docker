@@ -3,7 +3,7 @@ FROM docker.io/library/rockylinux:9.1
 ARG MKISOFS_VERSION
 
 RUN yum update --assumeyes && \
-    yum install --assumeyes bash curl
+    yum install --assumeyes bash bash-completion
 
 RUN if [ -z ${MKISOFS_VERSION+x} ]; then \
       yum install --assumeyes xorriso; \
