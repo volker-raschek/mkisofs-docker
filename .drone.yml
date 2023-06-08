@@ -66,7 +66,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag: false
     dockerfile: Dockerfile
@@ -129,7 +129,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag: false
     dockerfile: Dockerfile
@@ -192,7 +192,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag: false
     dockerfile: Dockerfile
@@ -253,7 +253,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag: false
     dockerfile: Dockerfile
@@ -372,7 +372,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag_suffix: amd64
     auto_tag: true
@@ -429,7 +429,7 @@ steps:
   image: git.cryptic.systems/volker.raschek/git:1.2.1
 
 - name: build
-  image: docker.io/plugins/docker:20.10.9
+  image: docker.io/plugins/docker:20.14.4
   settings:
     auto_tag_suffix: arm64-v8
     auto_tag: true
