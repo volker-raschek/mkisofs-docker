@@ -34,7 +34,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   resources:
     limits:
       cpu: 150
@@ -57,6 +57,9 @@ name: dry-run-amd64
 clone:
   disable: true
 
+depends_on:
+- linter
+
 platform:
   os: linux
   arch: amd64
@@ -96,14 +99,11 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
     - failure
-
-depends_on:
-- linter
 
 trigger:
   branch:
@@ -123,6 +123,9 @@ name: dry-run-arm64-v8
 clone:
   disable: true
 
+depends_on:
+- linter
+
 platform:
   os: linux
   arch: arm64
@@ -162,14 +165,11 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
     - failure
-
-depends_on:
-- linter
 
 trigger:
   branch:
@@ -188,6 +188,9 @@ name: latest-amd64
 
 clone:
   disable: true
+
+depends_on:
+- linter
 
 platform:
   os: linux
@@ -227,14 +230,11 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
     - failure
-
-depends_on:
-- linter
 
 trigger:
   branch:
@@ -252,6 +252,9 @@ name: latest-arm64-v8
 
 clone:
   disable: true
+
+depends_on:
+- linter
 
 platform:
   os: linux
@@ -291,14 +294,11 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
     - failure
-
-depends_on:
-- linter
 
 trigger:
   branch:
@@ -316,6 +316,10 @@ name: latest-manifest
 
 clone:
   disable: true
+
+depends_on:
+- latest-amd64
+- latest-arm64-v8
 
 steps:
 - name: clone
@@ -344,7 +348,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   resources:
     limits:
       cpu: 150
@@ -353,10 +357,6 @@ steps:
     status:
     - changed
     - failure
-
-depends_on:
-- latest-amd64
-- latest-arm64-v8
 
 trigger:
   branch:
@@ -408,7 +408,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   resources:
     limits:
       cpu: 150
@@ -475,7 +475,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
@@ -535,7 +535,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   when:
     status:
     - changed
@@ -554,6 +554,10 @@ name: tagged-manifest
 
 clone:
   disable: true
+
+depends_on:
+- tagged-amd64
+- tagged-arm64-v8
 
 steps:
 - name: clone
@@ -582,7 +586,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   resources:
     limits:
       cpu: 150
@@ -591,10 +595,6 @@ steps:
     status:
     - changed
     - failure
-
-depends_on:
-- tagged-amd64
-- tagged-arm64-v8
 
 trigger:
   event:
@@ -609,6 +609,9 @@ name: tagged-sync
 
 clone:
   disable: true
+
+depends_on:
+- tagged-manifest
 
 steps:
 - name: clone
@@ -626,7 +629,7 @@ steps:
       from_secret: container_image_registry_user
     DEST_CRED_PASSWORD:
       from_secret: container_image_registry_password
-  image: quay.io/skopeo/stable:v1.12.0
+  image: quay.io/skopeo/stable:v1.11.2
 
 - name: email-notification
   environment:
@@ -640,7 +643,7 @@ steps:
       from_secret: smtp_username
     SMTP_PASSWORD:
       from_secret: smtp_password
-  image: docker.io/volkerraschek/drone-email:0.1.2
+  image: git.cryptic.systems/volker.raschek/drone-email:0.1.2
   resources:
     limits:
       cpu: 150
@@ -649,9 +652,6 @@ steps:
     status:
     - changed
     - failure
-
-depends_on:
-- tagged-manifest
 
 trigger:
   event:
