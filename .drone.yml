@@ -452,7 +452,7 @@ steps:
   image: docker.io/plugins/docker:20.10.9
   settings:
     auto_tag: true
-    auto_tag_suffix: arm-v7
+    auto_tag_suffix: amd64
     dockerfile: Dockerfile
     force_tag: true
     no_cache: true
