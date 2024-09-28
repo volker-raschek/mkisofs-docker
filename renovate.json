@@ -1,36 +1,29 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "assignees": [ "volker.raschek" ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Extract renovate config",
+      "fileMatch": [
+        "^Makefile$"
+      ],
+      "matchStrings": [
+        "^[^\\s]*VERSION(:|\\?)?=\"?(?<currentValue>[\\w.]*)\"? # renovate:([\\s]+datasource=['\"]*(?<datasource>[^\\s\"']*)['\"]*|[\\s]+depName=['\"]*(?<depName>[^\\s'\"]*)['\"]*|[\\s]+registryUrl=['\"]*(?<registryUrl>[^\\s'\"]*)['\"]*|[\\s]+versioning=['\"]*(?<versioning>[^\\s'\"]*)['\"]*|[\\s]+extractVersion=['\"]*(?<extractVersion>[^\\s'\"]*)['\"]*)*"
+      ]
+    }
+  ],
   "labels": [ "renovate" ],
   "packageRules": [
     {
-      "addLabels": [ "renovate/droneci", "renovate/automerge" ],
+      "description": "Automatically update grouped public container images - patch",
+      "addLabels": ["renovate/automerge","renovate/container-images"],
       "automerge": true,
-      "matchManagers": "droneci",
-      "matchUpdateTypes": [ "minor", "patch"]
-    },
-    {
-      "description": "Automatically update patch version of used container images in docker files",
-      "addLabels": [ "renovate/container-image", "renovate/automerge" ],
-      "automerge": true,
-      "matchBaseBranches": [ "master" ],
-      "matchManagers": [ "dockerfile" ],
-      "matchUpdateTypes": [ "patch" ]
+      "enabled": true,
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ],
   "rebaseLabel": "renovate/rebase",
-  "rebaseWhen": "behind-base-branch",
-  "regexManagers": [
-    {
-      "description": "Update container images of mkisofs.sh",
-      "fileMatch": [
-        "^mkisofs.sh$"
-      ],
-      "matchStrings": [
-        "^CREATEREPO_IMAGE_FULLY_QUALIFIED=(?<depName>.*):(?<currentValue>.*)$",
-        "^MKISOFS_IMAGE_FULLY_QUALIFIED=(?<depName>.*):(?<currentValue>.*)$"
-      ],
-      "datasourceTemplate": "docker"
-    }
-  ]
+  "rebaseWhen": "behind-base-branch"
 }
