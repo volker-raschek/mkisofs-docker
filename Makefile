@@ -9,8 +9,8 @@ CONTAINER_RUNTIME?=$(shell which podman)
 
 # MKISOFS_IMAGE_REGISTRY_NAME
 # Defines the name of the new container to be built using several variables.
-MKISOFS_IMAGE_REGISTRY_NAME:=git.cryptic.systems
-MKISOFS_IMAGE_REGISTRY_USER:=volker.raschek
+MKISOFS_IMAGE_REGISTRY_NAME?=git.cryptic.systems
+MKISOFS_IMAGE_REGISTRY_USER?=volker.raschek
 
 MKISOFS_IMAGE_NAMESPACE?=${MKISOFS_IMAGE_REGISTRY_USER}
 MKISOFS_IMAGE_NAME:=mkisofs
