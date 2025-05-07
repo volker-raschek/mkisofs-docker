@@ -1,5 +1,5 @@
 # MKISOFS_VERSION
-# Only required to install a specifiy version
+# Only required to install a specify version
 MKISOFS_VERSION?=1.5.4
 
 # CONTAINER_RUNTIME
