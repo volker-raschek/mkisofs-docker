@@ -16,7 +16,6 @@ MKISOFS_IMAGE_NAMESPACE?=${MKISOFS_IMAGE_REGISTRY_USER}
 MKISOFS_IMAGE_NAME:=mkisofs
 MKISOFS_IMAGE_VERSION?=latest
 MKISOFS_IMAGE_FULLY_QUALIFIED=${MKISOFS_IMAGE_REGISTRY_NAME}/${MKISOFS_IMAGE_NAMESPACE}/${MKISOFS_IMAGE_NAME}:${MKISOFS_IMAGE_VERSION}
-MKISOFS_IMAGE_UNQUALIFIED=${MKISOFS_IMAGE_NAMESPACE}/${MKISOFS_IMAGE_NAME}:${MKISOFS_IMAGE_VERSION}
 
 # BUILD CONTAINER IMAGE
 # ==============================================================================
@@ -28,14 +27,14 @@ container-image/build:
 		--no-cache \
 		--pull \
 		--tag ${MKISOFS_IMAGE_FULLY_QUALIFIED} \
-		--tag ${MKISOFS_IMAGE_UNQUALIFIED} \
+		--tag \
 		.
 
 # DELETE CONTAINER IMAGE
 # ==============================================================================
 PHONY:=container-image/delete
 container-image/delete:
-	- ${CONTAINER_RUNTIME} image rm ${MKISOFS_IMAGE_FULLY_QUALIFIED} ${MKISOFS_IMAGE_UNQUALIFIED}
+	- ${CONTAINER_RUNTIME} image rm ${MKISOFS_IMAGE_FULLY_QUALIFIED}
 	- ${CONTAINER_RUNTIME} image rm ${BASE_IMAGE_FULL}
 
 # PUSH CONTAINER IMAGE
