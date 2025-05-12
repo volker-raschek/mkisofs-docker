@@ -27,7 +27,6 @@ container-image/build:
 		--no-cache \
 		--pull \
 		--tag ${MKISOFS_IMAGE_FULLY_QUALIFIED} \
-		--tag \
 		.
 
 # DELETE CONTAINER IMAGE
